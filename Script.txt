@@ -1,0 +1,60 @@
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS public.Anuncios
+(
+    id_anuncios serial PRIMARY KEY,
+    titulo text,
+    descripcion text,
+    id_vehiculo integer,
+    id_usuario integer,
+    FOREIGN KEY (id_vehiculo) REFERENCES public.Vehiculos (id_vehiculo) ON UPDATE NO ACTION ON DELETE NO ACTION,
+    FOREIGN KEY (id_usuario) REFERENCES public.Usuarios (id_usuario) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS public.ArticulosBlog
+(
+    id_articulosblog serial PRIMARY KEY,
+    titulo text,
+    contenido text,
+    fecha_publicacion date,
+    id_usuario integer,
+    FOREIGN KEY (id_usuario) REFERENCES public.Usuarios (id_usuario) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS public.Resenias
+(
+    id_resenias serial PRIMARY KEY,
+    comentario text,
+    calificacion integer,
+    id_vendedor integer,
+    id_comprador integer,
+    FOREIGN KEY (id_vendedor) REFERENCES public.Usuarios (id_usuario) ON UPDATE NO ACTION ON DELETE NO ACTION,
+    FOREIGN KEY (id_comprador) REFERENCES public.Usuarios (id_usuario) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS public.Usuarios
+(
+    id_usuarios serial PRIMARY KEY,
+    nombre text,
+    apellido text,
+    genero text,
+    lugar_residencia text,
+    email text,
+    password text,
+    rol text
+);
+
+CREATE TABLE IF NOT EXISTS public.Vehiculos
+(
+    id_vehiculos serial PRIMARY KEY,
+    marca text,
+    modelo text,
+    anio integer,
+    precio numeric,
+    procedencia text,
+    imagenes text,
+    id_vendedor integer,
+    FOREIGN KEY (id_vendedor) REFERENCES public.Usuarios (id_usuario) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+END;
